@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>A Serilog sink that writes log events to aliyun logservice.</Description>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <Authors>Sim Tsai</Authors>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;</TargetFrameworks>
+    <AssemblyName>Serilog.Sinks.AliyunLog</AssemblyName>
+    <PackageId>Serilog.Sinks.AliyunLog</PackageId>
+    <PackageTags>serilog;aliyun</PackageTags>
+    <RepositoryUrl>https://github.com/simhgd/serilog-sinks-aliyunlog</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <GenerateAssemblyVersionAttribute>true</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyFileVersionAttribute>true</GenerateAssemblyFileVersionAttribute>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <RootNamespace>Serilog</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aliyun.Api.LogService" Version="1.2.2" />
+    <PackageReference Include="Serilog" Version="2.8.0" />
+    <PackageReference Include="Serilog.Sinks.PeriodicBatching" Version="2.2.0" />
+  </ItemGroup>
+
+</Project>
