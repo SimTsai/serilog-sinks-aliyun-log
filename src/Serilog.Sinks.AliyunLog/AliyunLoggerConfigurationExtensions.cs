@@ -23,9 +23,11 @@ namespace Serilog
         /// </summary>
         /// <param name="sinkConfiguration">Logger sink configuration.</param>
         /// <param name="logServiceClient"></param>
-        /// <param name="logstoreName"></param>
-        /// <param name="project"></param>
-        /// <param name="logTags"></param>
+        /// <param name="logstoreName">Logstore 的名称</param>
+        /// <param name="project">Project 名称</param>
+        /// <param name="source">日志的来源地，例如产生该日志机器的IP地址。</param>
+        /// <param name="topic">用户自定义字段，用以标记一批日志。例如访问日志可根据不同站点进行标记。</param>
+        /// <param name="logTags">日志的标签</param>
         /// <param name="restrictedToMinimumLevel">The minimum level for
         /// events passed through the sink. Ignored when <paramref name="levelSwitch"/> is specified.</param>
         /// <param name="outputTemplate">Message template describing the output format.</param>
@@ -38,6 +40,8 @@ namespace Serilog
             ILogServiceClient logServiceClient,
             string logstoreName = null,
             string project = null,
+            string source = null,
+            string topic = null,
             IDictionary<string, string> logTags = null,
             LogEventLevel restrictedToMinimumLevel = LevelAlias.Minimum,
             string outputTemplate = DefaultOutputTemplate,
@@ -49,7 +53,7 @@ namespace Serilog
             if (logServiceClient == null) throw new ArgumentNullException(nameof(logServiceClient));
 
             var formatter = new MessageTemplateTextFormatter(outputTemplate, formatProvider);
-            return sinkConfiguration.AliyunLog(logServiceClient, formatter, logstoreName, project, logTags, restrictedToMinimumLevel, levelSwitch);
+            return sinkConfiguration.AliyunLog(logServiceClient, formatter, logstoreName, project, source, topic, logTags, restrictedToMinimumLevel, levelSwitch);
         }
 
         /// <summary>
@@ -58,9 +62,11 @@ namespace Serilog
         /// <param name="sinkConfiguration">Logger sink configuration.</param>
         /// <param name="logServiceClient"></param>
         /// <param name="formatter">Text formatter used by sink.</param>
-        /// <param name="logstoreName"></param>
-        /// <param name="project"></param>
-        /// <param name="logTags"></param>
+        /// <param name="logstoreName">Logstore 的名称</param>
+        /// <param name="project">Project 名称</param>
+        /// <param name="source">日志的来源地，例如产生该日志机器的IP地址。</param>
+        /// <param name="topic">用户自定义字段，用以标记一批日志。例如访问日志可根据不同站点进行标记。</param>
+        /// <param name="logTags">日志的标签</param>
         /// <param name="restrictedToMinimumLevel">The minimum level for
         /// events passed through the sink. Ignored when <paramref name="levelSwitch"/> is specified.</param>
         /// <param name="levelSwitch">A switch allowing the pass-through minimum level
@@ -72,6 +78,8 @@ namespace Serilog
             ITextFormatter formatter,
             string logstoreName = null,
             string project = null,
+            string source = null,
+            string topic = null,
             IDictionary<string, string> logTags = null,
             LogEventLevel restrictedToMinimumLevel = LevelAlias.Minimum,
             LoggingLevelSwitch levelSwitch = null)
@@ -79,7 +87,7 @@ namespace Serilog
             if (sinkConfiguration == null) throw new ArgumentNullException(nameof(sinkConfiguration));
             if (logstoreName == null) throw new ArgumentNullException(nameof(logstoreName));
             if (logServiceClient == null) throw new ArgumentNullException(nameof(logServiceClient));
-            var sink = new AliyunLogSink(logServiceClient, formatter, logstoreName, project, logTags);
+            var sink = new AliyunLogSink(logServiceClient, formatter, logstoreName, project, source, topic, logTags);
             return sinkConfiguration.Sink(sink, restrictedToMinimumLevel, levelSwitch);
         }
     }
